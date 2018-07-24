@@ -50,8 +50,10 @@ class NinjaFormsWrap
             $fields = $s->get_field_values();
             $fields['post_id'] = $post->ID;
 
-            foreach($keys as $key => $keyIndex){
-                $fields[$key] = $fields['_field_' . $keyIndex];
+            foreach ($keys as $key => $keyIndex) {
+                if (isset($fields['_field_' . $keyIndex])) {
+                    $fields[$key] = $fields['_field_' . $keyIndex];
+                }
             }
 
             $return[$post->ID] = $fields;
