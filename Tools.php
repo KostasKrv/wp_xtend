@@ -60,11 +60,31 @@ class wp_xtend {
 	*	Get page slug (when the page slug is the second element)
 	*
 	*/
-	public static function isPage($page)
-	{
-		$slug = explode('?', self::getUrlParam(3))[0];
-		return $slug === $page;
-	}
+    	public static function isPage($page)
+    	{
+        	$slug = self::getLastParam();
+
+        	if (is_page($page) || $slug === $page) {
+            		return true;
+        	}
+
+        	return false;
+    	}
+	
+    	public static function getLastParam()
+    	{
+        	$request_uri = explode('?', $_SERVER["REQUEST_URI"])[0];
+
+        	$lastCharacter = substr($request_uri, -1);
+        	if ($lastCharacter !== '/') {
+            	$request_uri .= '/';
+        	}
+
+        	$urlExploded = explode('/', $request_uri);
+
+        	$prelast = $urlExploded[count($urlExploded) - 2];
+        	return $prelast;
+    	}
 
 	/**
 	*
